@@ -103,11 +103,13 @@ func NewOVHProvider(ctx context.Context, domainFilter endpoint.DomainFilter, end
 // Records returns the list of records in all relevant zones.
 func (p *OVHProvider) Records(ctx context.Context) ([]*endpoint.Endpoint, error) {
 	_, records, err := p.zonesRecords(ctx)
+	fmt.Printf("here2: %+v\n", records)
 	if err != nil {
 		return nil, err
 	}
 	endpoints := ovhGroupByNameAndType(records)
 	log.Infof("OVH: %d endpoints have been found", len(endpoints))
+	fmt.Printf("here: %+v\n", endpoints)
 	return endpoints, nil
 }
 
