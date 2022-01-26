@@ -90,7 +90,7 @@ IMAGE         ?= us.gcr.io/k8s-artifacts-prod/external-dns/$(BINARY)
 VERSION       ?= $(shell git describe --tags --always --dirty)
 BUILD_FLAGS   ?= -v
 LDFLAGS       ?= -X sigs.k8s.io/external-dns/pkg/apis/externaldns.Version=$(VERSION) -w -s
-ARCHS         = amd64 arm64v8 arm32v7
+ARCHS         = amd64
 SHELL         = /bin/bash
 
 
@@ -141,7 +141,7 @@ clean:
 .PHONY: release.staging
 
 release.staging:
-	IMAGE=$(IMAGE_STAGING) $(MAKE) build.push/multiarch
+	IMAGE=$(IMAGE_STAGING) $(MAKE) build.push
 
 release.prod:
 	$(MAKE) build.push/multiarch
