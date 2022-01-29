@@ -31,6 +31,12 @@ build-job:       # This job runs in the build stage, which runs first.
       export VERSION=10001
       export PULL_BASE_REF=master
       export IMAGE_STAGING="$CI_REGISTRY_IMAGE${tag}"
+
+      echo "Clean Go Cache"
+      go clean --cache
+      echo "Clean build dir"
+      make clean
+
       echo "IMAGE_STAGING: $IMAGE_STAGING"
       make release.staging
       echo "Compile complete."
