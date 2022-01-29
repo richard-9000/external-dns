@@ -1,10 +1,10 @@
-module github.com/richard-9000/external-dns
+module sigs.k8s.io/external-dns
 
 go 1.16
 
 replace (
 	k8s.io/klog/v2 => github.com/Raffo/knolog v0.0.0-20211016155154-e4d5e0cc970a
-  sigs.k8s.io/external-dns => github.com/richard-9000/external-dns osb-v0.0.2
+	sigs.k8s.io/external-dns => github.com/richard-9000/external-dns v0.10.2-0.20220129173354-83ac6d34e2af
 )
 
 require (
@@ -32,8 +32,7 @@ require (
 	github.com/exoscale/egoscale v0.73.2
 	github.com/ffledgling/pdns-go v0.0.0-20180219074714-524e7daccd99
 	github.com/go-gandi/go-gandi v0.0.0-20200921091836-0d8a64b9cc09
-	github.com/go-logr/logr v1.1.0 // indirect
-	github.com/gobuffalo/envy v1.10.1 // indirect
+	github.com/gobuffalo/envy v1.10.1
 	github.com/golang/sync v0.0.0-20180314180146-1d60e4601c6f
 	github.com/google/go-cmp v0.5.6
 	github.com/gophercloud/gophercloud v0.21.0

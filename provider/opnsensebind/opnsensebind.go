@@ -52,6 +52,7 @@ type OSBProvider struct {
 	provider.BaseProvider
 	client osbClient
 	apiRateLimiter ratelimit.Limiter
+	domainFilter endpoint.DomainFilter
 	DryRun       bool
 }
 
@@ -93,7 +94,7 @@ func (c *OsbHttpClient) Post(api string, body io.Reader) (resp []byte, code int,
 }
 
 // NewOSBClientinitializes a new OSB DNS based Provider.
-func NewOSBProvider(ctx context.Context, opnUrl string, apiRateLimit int, dryRun bool) (*OSBProvider, error) {
+func NewOSBProvider(ctx context.Context, domainFilter endpoint.DomainFilter, opnUrl string, apiRateLimit int, dryRun bool) (*OSBProvider, error) {
 
 	// TODO: Add Dry Run support
 	if dryRun {
@@ -118,6 +119,7 @@ func NewOSBProvider(ctx context.Context, opnUrl string, apiRateLimit int, dryRun
 
 	return &OSBProvider {
 		client:         &client,
+		domainFilter:   domainFilter,
 		apiRateLimiter: ratelimit.New(apiRateLimit),
 		DryRun:         dryRun,
 	}, nil
@@ -272,7 +274,9 @@ func (p *OSBProvider) getZones() ([]*DNSDomain, error) {
 	var domains = []*DNSDomain {}
 	for _,v := range dnsDomains.Domain.Domains.Domain {
 			//TODO: filter out disabled zones and slaves
-			domains = append(domains, &v)
+      if p.domainFilter.Match(v.Name) {
+			  domains = append(domains, &v)
+      }
 	}
 	return domains, nil
 }
