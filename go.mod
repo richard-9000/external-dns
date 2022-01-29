@@ -1,11 +1,10 @@
-module github.com/rrodgers/external-dns
-//module sigs.k8s.io/external-dns
+module github.com/richard-9000/external-dns
 
 go 1.16
 
 replace (
 	k8s.io/klog/v2 => github.com/Raffo/knolog v0.0.0-20211016155154-e4d5e0cc970a
-	//sigs.k8s.io/external-dns => /home/richie/WindowsDocuments/git/external-dns-osb
+  sigs.k8s.io/external-dns => github.com/richard-9000/external-dns osb-v0.0.2
 )
 
 require (
