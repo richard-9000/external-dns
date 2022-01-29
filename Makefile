@@ -85,7 +85,7 @@ test:
 
 BINARY        ?= external-dns
 SOURCES        = $(shell find . -name '*.go')
-IMAGE_STAGING  = gcr.io/k8s-staging-external-dns/$(BINARY)
+IMAGE_STAGING ?= gcr.io/k8s-staging-external-dns/$(BINARY)
 IMAGE         ?= us.gcr.io/k8s-artifacts-prod/external-dns/$(BINARY)
 VERSION       ?= $(shell git describe --tags --always --dirty)
 BUILD_FLAGS   ?= -v
