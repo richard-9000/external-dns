@@ -17,7 +17,7 @@ OpnSense HTTP Client from:
 https://github.com/kradalby/opnsense-go
 */
 
-package osb
+package opnsensebind
 
 import (
 	"bytes"
@@ -93,7 +93,7 @@ func (c *OsbHttpClient) Post(api string, body io.Reader) (resp []byte, code int,
 }
 
 // NewOSBClientinitializes a new OSB DNS based Provider.
-func NewOSBProvider(ctx context.Context, opnUrl, apiRateLimit int, dryRun bool) (*OSBProvider, error) {
+func NewOSBProvider(ctx context.Context, opnUrl string, apiRateLimit int, dryRun bool) (*OSBProvider, error) {
 
 	// TODO: Add Dry Run support
 	if dryRun {
@@ -107,8 +107,8 @@ func NewOSBProvider(ctx context.Context, opnUrl, apiRateLimit int, dryRun bool) 
 	httpClient := &http.Client{ Timeout: 60 * time.Second }
 	client := OsbHttpClient {
 		opnUrl: urlp,
-		key: envy.Get("OPNSENSEBIND_KEY", key),
-		secret: envy.Get("OPNSENSEBIND_SECRET", secret),
+		key: envy.Get("OPNSENSEBIND_KEY", ""),
+		secret: envy.Get("OPNSENSEBIND_SECRET", ""),
 		c: httpClient,
 	}
 	_, _, err = client.Get("bind/record/get")

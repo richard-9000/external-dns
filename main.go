@@ -58,7 +58,7 @@ import (
 	"sigs.k8s.io/external-dns/provider/ns1"
 	"sigs.k8s.io/external-dns/provider/oci"
 	"sigs.k8s.io/external-dns/provider/ovh"
-	"sigs.k8s.io/external-dns/provider/osb"
+	"sigs.k8s.io/external-dns/provider/opensensebind"
 	"sigs.k8s.io/external-dns/provider/pdns"
 	"sigs.k8s.io/external-dns/provider/rcode0"
 	"sigs.k8s.io/external-dns/provider/rdns"
@@ -231,8 +231,8 @@ func main() {
 		p, err = hetzner.NewHetznerProvider(ctx, domainFilter, cfg.DryRun)
 	case "ovh":
 		p, err = ovh.NewOVHProvider(ctx, domainFilter, cfg.OVHEndpoint, cfg.OVHApiRateLimit, cfg.DryRun)
-	case "osb":
-		p, err = osb.NewOSBProvider(ctx, domainFilter, cfg.OSBEndpoint, cfg.OSBApiRateLimit, cfg.DryRun)
+	case "opensensebind":
+		p, err = opensensebind.NewOSBProvider(ctx, domainFilter, cfg.OSBEndpoint, cfg.OSBApiRateLimit, cfg.DryRun)
 	case "linode":
 		p, err = linode.NewLinodeProvider(domainFilter, cfg.DryRun, externaldns.Version)
 	case "dnsimple":
