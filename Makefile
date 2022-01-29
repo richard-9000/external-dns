@@ -87,10 +87,10 @@ BINARY        ?= external-dns
 SOURCES        = $(shell find . -name '*.go')
 IMAGE_STAGING ?= gcr.io/k8s-staging-external-dns/$(BINARY)
 IMAGE         ?= us.gcr.io/k8s-artifacts-prod/external-dns/$(BINARY)
-VERSION       ?= $(shell git describe --tags --always --dirty)
+VERSION       ?= $(shell pwd >&2; ls -ltra >&2; git describe --tags --always --dirty)
 BUILD_FLAGS   ?= -v
 LDFLAGS       ?= -X sigs.k8s.io/external-dns/pkg/apis/externaldns.Version=$(VERSION) -w -s
-ARCHS         = amd64 arm64v8 arm32v7
+ARCHS         = amd64
 SHELL         = /bin/bash
 
 
@@ -105,7 +105,7 @@ build.push/multiarch:
 		image="$(IMAGE):$(VERSION)-$${arch}" ;\
 		# pre-pull due to https://github.com/kubernetes-sigs/cluster-addons/pull/84/files ;\
 		docker pull $${arch}/alpine:3.14 ;\
-		docker pull golang:1.16 ;\
+		docker pull golang:1.17 ;\
 		DOCKER_BUILDKIT=1 docker build --rm --tag $${image} --build-arg VERSION="$(VERSION)" --build-arg ARCH="$${arch}" . ;\
 		docker push $${image} ;\
 		arch_specific_tags+=( "--amend $${image}" ) ;\
@@ -141,7 +141,7 @@ clean:
 .PHONY: release.staging
 
 release.staging:
-	IMAGE=$(IMAGE_STAGING) $(MAKE) build.push/multiarch
+	IMAGE=$(IMAGE_STAGING) $(MAKE) build.push
 
 release.prod:
 	$(MAKE) build.push/multiarch
